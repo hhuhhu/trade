@@ -51,11 +51,11 @@ class BaseDataSource(AbstractDataSource):
                 DayBarStore(_p('futures.bcolz'), FutureDayBarConverter),
                 DayBarStore(_p('funds.bcolz'), FundDayBarConverter),
             ]
-
             self._instruments = InstrumentStore(_p('instruments.pk'))
             self._dividends = DividendStore(_p('original_dividends.bcolz'))
             self._trading_dates = TradingDatesStore(_p('trading_dates.bcolz'))
             self._yield_curve = YieldCurveStore(_p('yield_curve.bcolz'))
+            # print("yield_curve: ", self._yield_curve.get_yield_curve())
             self._split_factor = SimpleFactorStore(_p('split_factor.bcolz'))
             self._ex_cum_factor = SimpleFactorStore(_p('ex_cum_factor.bcolz'))
 
@@ -64,6 +64,7 @@ class BaseDataSource(AbstractDataSource):
 
             self.get_yield_curve = self._yield_curve.get_yield_curve
             self.get_risk_free_rate = self._yield_curve.get_risk_free_rate
+            print()
         except IOError as e:
             raise RuntimeError(
                 _(u"Bundle is out of date, please use `rqalpha update_bundle` to renew your bundle data."))

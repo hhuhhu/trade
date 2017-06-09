@@ -22,6 +22,7 @@ class DividendStore(object):
     def __init__(self, f):
         ct = bcolz.open(f, 'r')
         self._index = ct.attrs['line_map']
+        print("index: ", self._index)
         self._table = np.empty((len(ct), ), dtype=np.dtype([
             ('announcement_date', '<u4'), ('book_closure_date', '<u4'),
             ('ex_dividend_date', '<u4'), ('payable_date', '<u4'),
@@ -41,3 +42,7 @@ class DividendStore(object):
             return None
 
         return self._table[s:e]
+
+    @property
+    def index(self):
+        return self.index()

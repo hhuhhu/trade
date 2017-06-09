@@ -21,9 +21,17 @@ from model.instrument import Instrument
 
 class InstrumentStore(object):
     def __init__(self, f):
-        with open(f, 'rb') as store:
-            d = pickle.load(store)
-        self._instruments = [Instrument(i) for i in d]
+        self.d = self.meta_data_get(f)
+        self._instruments = [Instrument(i) for i in self.d]
 
     def get_all_instruments(self):
         return self._instruments
+
+    def meta_data_get(self, f):
+        with open(f, 'rb') as store:
+            d = pickle.load(store)
+        return d
+
+    @property
+    def instruments(self):
+        return self.d

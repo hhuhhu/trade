@@ -27,6 +27,14 @@ class DayBarStore(object):
         self._index = self._table.attrs['line_map']
         self._converter = converter
 
+    @property
+    def index(self):
+        return self._index
+
+    @property
+    def fields(self):
+        return self._table.names[1:] + ['datetime']
+
     @staticmethod
     def _remove_(l, v):
         try:
@@ -59,7 +67,6 @@ class DayBarStore(object):
             result[f] = self._converter.convert(f, self._table.cols[f][s:e])
         result['datetime'] = self._table.cols['date'][s:e]
         result['datetime'] *= 1000000
-
         return result
 
     def get_date_range(self, order_book_id):
